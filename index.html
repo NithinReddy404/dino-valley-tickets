@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dino Valley Tickets — book dinosaur park tickets with a realistic 3D-inspired experience." />
+  <title>Dino Valley Tickets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar glass">
+      <a class="brand" href="#home" aria-label="Dino Valley Tickets home">
+        <span class="brand-mark">🦖</span>
+        <span>
+          <strong>Dino Valley Tickets</strong>
+          <small>Realistic park booking website</small>
+        </span>
+      </a>
+
+      <nav class="top-actions" aria-label="Website controls">
+        <button id="muteToggle" class="icon-btn" aria-pressed="false" title="Mute audio">🔊</button>
+        <button id="motionToggle" class="icon-btn" aria-pressed="false" title="Reduce motion">🎞️</button>
+        <button id="settingsToggle" class="icon-btn" title="Open settings">⚙️</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="home" class="hero-section section active" data-step="1">
+        <div class="sky-parallax" aria-hidden="true">
+          <div class="cloud-layer"></div>
+          <div class="dragon dragon-1">🐉</div>
+          <div class="dragon dragon-2">🐉</div>
+          <div class="dragon dragon-3">🐉</div>
+          <div class="dragon dragon-4">🐉</div>
+          <div class="ptero ptero-1">🦕</div>
+          <div class="ptero ptero-2">🦖</div>
+          <div class="ptero ptero-3">🦕</div>
+        </div>
+
+        <div class="hero-grid">
+          <div class="hero-copy glass-strong floating-card">
+            <p class="eyebrow">Immersive dinosaur park booking</p>
+            <h1>Step into a realistic prehistoric world.</h1>
+            <p class="lede">
+              Book your park entry through a cinematic dinosaur-themed website with lifelike 3D-inspired visuals,
+              secure checkout, and receipt delivery by SMS or email.
+            </p>
+
+            <div class="price-row">
+              <div class="price-card">
+                <span class="label">Ticket price</span>
+                <strong>25 USD</strong>
+              </div>
+              <div class="trust-stack">
+                <span>Secure checkout</span>
+                <span>SMS or email receipt</span>
+                <span>Mobile entry pass</span>
+              </div>
+            </div>
+
+            <div class="cta-row">
+              <button class="btn btn-primary" data-jump="details">Book Ticket</button>
+              <a class="btn btn-secondary" href="#locationBoard">See location</a>
+            </div>
+          </div>
+
+          <div class="scene-column">
+            <div class="dino-stage" aria-label="Realistic dinosaur hero scene">
+              <div class="glow-orb"></div>
+              <div class="terrain"></div>
+              <div class="dino-shadow"></div>
+              <div class="main-dino">
+                <div class="dino-head"></div>
+                <div class="dino-neck"></div>
+                <div class="dino-body"></div>
+                <div class="dino-tail"></div>
+                <div class="dino-leg leg-left"></div>
+                <div class="dino-leg leg-right"></div>
+              </div>
+            </div>
+
+            <aside id="locationBoard" class="location-board glass-strong">
+              <span class="board-kicker">Park location</span>
+              <strong>Dino Valley Park</strong>
+              <p>Austin, Texas</p>
+              <div class="board-flyers" aria-hidden="true">
+                <span>🦕</span>
+                <span>🦖</span>
+                <span>🦕</span>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="details" class="section booking-section" data-step="2">
+        <div class="section-header">
+          <p class="eyebrow">Step 1 of 3</p>
+          <h2>Ticket Details</h2>
+          <p>Choose your visit date and number of guests.</p>
+        </div>
+
+        <div class="content-grid">
+          <form id="ticketForm" class="panel glass-strong" novalidate>
+            <label>
+              <span>Visit date</span>
+              <input type="date" id="visitDate" required />
+            </label>
+
+            <label>
+              <span>Number of tickets</span>
+              <div class="stepper">
+                <button type="button" id="minusQty" aria-label="Decrease quantity">−</button>
+                <input type="number" id="ticketQty" value="1" min="1" max="10" required />
+                <button type="button" id="plusQty" aria-label="Increase quantity">+</button>
+              </div>
+            </label>
+
+            <label>
+              <span>Ticket type</span>
+              <select id="ticketType" required>
+                <option value="Adult">Adult</option>
+                <option value="Child">Child</option>
+                <option value="Senior">Senior</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Special note (optional)</span>
+              <textarea id="specialNote" rows="4" placeholder="Stroller, accessibility assistance, or group note"></textarea>
+            </label>
+
+            <button class="btn btn-primary btn-block" type="submit">Continue to Checkout</button>
+          </form>
+
+          <aside class="panel glass summary-card">
+            <h3>Your booking</h3>
+            <ul class="summary-list">
+              <li><span>Park</span><strong>Dino Valley Park</strong></li>
+              <li><span>Location</span><strong>Austin, Texas</strong></li>
+              <li><span>Ticket Price</span><strong>25 USD</strong></li>
+              <li><span>Quantity</span><strong id="summaryQty">1</strong></li>
+              <li><span>Ticket Type</span><strong id="summaryType">Adult</strong></li>
+              <li><span>Total</span><strong id="summaryTotal">25 USD</strong></li>
+            </ul>
+            <p class="helper-copy">Tickets are subject to park capacity on your selected date.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="checkout" class="section booking-section" data-step="3">
+        <div class="section-header">
+          <p class="eyebrow">Step 2 of 3</p>
+          <h2>Checkout</h2>
+          <p>Enter your payment details securely and choose how you want your receipt.</p>
+        </div>
+
+        <div class="content-grid">
+          <form id="checkoutForm" class="panel glass-strong" novalidate>
+            <div class="two-col">
+              <label>
+                <span>Name on card</span>
+                <input type="text" id="cardName" placeholder="Nithin Reddy" required />
+              </label>
+              <label>
+                <span>Billing zip</span>
+                <input type="text" id="billingZip" inputmode="numeric" maxlength="10" placeholder="78701" required />
+              </label>
+            </div>
+
+            <label>
+              <span>Card number</span>
+              <input type="text" id="cardNumber" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456" required />
+            </label>
+
+            <div class="two-col">
+              <label>
+                <span>Expiry</span>
+                <input type="text" id="cardExpiry" inputmode="numeric" maxlength="5" placeholder="MM/YY" required />
+              </label>
+              <label>
+                <span>CVC</span>
+                <input type="text" id="cardCvc" inputmode="numeric" maxlength="4" placeholder="123" required />
+              </label>
+            </div>
+
+            <fieldset class="receipt-fieldset">
+              <legend>Send my receipt to</legend>
+              <label class="choice-pill"><input type="radio" name="receiptMethod" value="sms" checked /> <span>Phone (SMS)</span></label>
+              <label class="choice-pill"><input type="radio" name="receiptMethod" value="email" /> <span>Email</span></label>
+              <label class="choice-pill"><input type="radio" name="receiptMethod" value="both" /> <span>Both</span></label>
+            </fieldset>
+
+            <div id="smsFieldWrap">
+              <label>
+                <span>Phone number</span>
+                <input type="tel" id="phoneNumber" placeholder="(555) 123-4567" />
+              </label>
+            </div>
+
+            <div id="emailFieldWrap" class="hidden">
+              <label>
+                <span>Email address</span>
+                <input type="email" id="emailAddress" placeholder="you@example.com" />
+              </label>
+            </div>
+
+            <div class="privacy-box">
+              <strong>Secure and private payment</strong>
+              <p>Your payment details are encrypted and processed securely. We do not store your full card number on your device.</p>
+              <p>We only use your phone number or email to send your receipt and booking updates.</p>
+            </div>
+
+            <button id="payButton" class="btn btn-primary btn-block" type="submit">Pay 25 USD</button>
+          </form>
+
+          <aside class="panel glass summary-card">
+            <h3>Order summary</h3>
+            <ul class="summary-list">
+              <li><span>Park</span><strong>Dino Valley Park</strong></li>
+              <li><span>Location</span><strong>Austin, Texas</strong></li>
+              <li><span>Visit date</span><strong id="checkoutDate">—</strong></li>
+              <li><span>Tickets</span><strong id="checkoutQty">1</strong></li>
+              <li><span>Total</span><strong id="checkoutTotal">25 USD</strong></li>
+            </ul>
+            <div class="mini-scene" aria-hidden="true">
+              <div class="mini-dragon">🐉</div>
+              <div class="mini-dragon mini-dragon-2">🐉</div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="confirmation" class="section booking-section" data-step="4">
+        <div class="section-header">
+          <p class="eyebrow">Step 3 of 3</p>
+          <h2>Confirmation & Receipt</h2>
+          <p>Your booking is complete. Your entry pass is ready.</p>
+        </div>
+
+        <div class="confirmation-card panel glass-strong">
+          <div class="success-badge">✓</div>
+          <h3>Booking confirmed</h3>
+          <p id="confirmationMessage">Your receipt has been sent.</p>
+
+          <div class="ticket-pass">
+            <div>
+              <span class="label">Park</span>
+              <strong>Dino Valley Park</strong>
+            </div>
+            <div>
+              <span class="label">Location</span>
+              <strong>Austin, Texas</strong>
+            </div>
+            <div>
+              <span class="label">Date</span>
+              <strong id="confirmDate">—</strong>
+            </div>
+            <div>
+              <span class="label">Tickets</span>
+              <strong id="confirmQty">1</strong>
+            </div>
+            <div class="qr-box" aria-label="Decorative admission code">🧾</div>
+          </div>
+
+          <div class="cta-row centered">
+            <button class="btn btn-primary" data-jump="home">Back to Home</button>
+            <button class="btn btn-secondary" id="downloadReceiptBtn">Download Summary</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="settingsDialog" class="settings-dialog glass-strong">
+    <form method="dialog" class="settings-form">
+      <div class="dialog-head">
+        <h3>Settings</h3>
+        <button class="icon-btn" value="cancel">✕</button>
+      </div>
+
+      <label class="settings-row">
+        <span>Mute audio</span>
+        <input type="checkbox" id="settingMute" />
+      </label>
+      <label class="settings-row">
+        <span>Reduce motion</span>
+        <input type="checkbox" id="settingReduceMotion" />
+      </label>
+      <label class="settings-row">
+        <span>Volume</span>
+        <input type="range" id="volumeRange" min="0" max="1" step="0.1" value="0.6" />
+      </label>
+
+      <p class="helper-copy">When you submit the payment form, the dinosaur roar plays unless mute is enabled. Reduce motion softens background movement and parallax.</p>
+
+      <menu class="dialog-actions">
+        <button class="btn btn-secondary" value="cancel">Close</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
