@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TARGET RANGE</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+
+  body {
+    background: #0a0a0f;
+    font-family: 'Orbitron', monospace;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  #game-area {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: 
+      radial-gradient(ellipse at 50% 100%, #1a0a2e 0%, transparent 70%),
+      linear-gradient(180deg, #0a0a0f 0%, #0d0d1a 60%, #1a0820 100%);
+  }
+
+  /* Grid floor */
+  #game-area::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 35%;
+    background-image: 
+      linear-gradient(rgba(0,255,180,0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,180,0.15) 1px, transparent 1px);
+    background-size: 60px 60px;
+    transform: perspective(300px) rotateX(60deg);
+    transform-origin: bottom;
+  }
+
+  /* Scanlines */
+  #game-area::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* HUD */
+  #hud {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+    background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(0,255,180,0.2);
+  }
+
+  .hud-block { display: flex; flex-direction: column; gap: 2px; }
+  .hud-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(0,255,180,0.5);
+    text-transform: uppercase;
+  }
+  .hud-value {
+    font-size: 28px;
+    font-weight: 900;
+    color: #00ffb4;
+    text-shadow: 0 0 20px rgba(0,255,180,0.8), 0 0 40px rgba(0,255,180,0.3);
+    line-height: 1;
+  }
+
+  #title-text {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* Ammo bar */
+  #ammo-display {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .bullet {
+    width: 8px;
+    height: 22px;
+    border-radius: 4px 4px 2px 2px;
+    background: linear-gradient(180deg, #ffdd00, #ff8800);
+    box-shadow: 0 0 8px rgba(255,180,0,0.6);
+    transition: all 0.1s;
+  }
+  .bullet.spent {
+    background: #333;
+    box-shadow: none;
+    opacity: 0.3;
+  }
+
+  /* Targets */
+  .target {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    transition: transform 0.1s;
+    will-change: transform, left;
+  }
+
+  .target-svg { pointer-events: none; }
+
+  .target:hover { transform: scale(1.05); }
+  .target.hit {
+    animation: explode 0.4s forwards;
+  }
+
+  @keyframes explode {
+    0%   { transform: scale(1); opacity: 1; }
+    30%  { transform: scale(1.6); opacity: 0.8; }
+    100% { transform: scale(0.2); opacity: 0; }
+  }
+
+  /* Crosshair */
+  #crosshair {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    pointer-events: none;
+    z-index: 200;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Flash effect */
+  #flash {
+    position: fixed;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 150;
+    transition: opacity 0.05s;
+  }
+
+  /* Score popup */
+  .score-popup {
+    position: absolute;
+    font-size: 20px;
+    font-weight: 900;
+    color: #ffdd00;
+    text-shadow: 0 0 10px rgba(255,220,0,0.8);
+    pointer-events: none;
+    z-index: 80;
+    animation: floatUp 0.7s forwards;
+    letter-spacing: 2px;
+  }
+
+  @keyframes floatUp {
+    0%   { transform: translateY(0) scale(0.5); opacity: 1; }
+    100% { transform: translateY(-70px) scale(1.1); opacity: 0; }
+  }
+
+  /* Miss text */
+  .miss-popup {
+    position: absolute;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ff4466;
+    pointer-events: none;
+    z-index: 80;
+    animation: floatUp 0.5s forwards;
+    letter-spacing: 3px;
+  }
+
+  /* Combo */
+  #combo {
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #ff8800;
+    text-shadow: 0 0 15px rgba(255,140,0,0.8);
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 50;
+    white-space: nowrap;
+  }
+
+  /* Reload */
+  #reload-msg {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: #ff4466;
+    text-shadow: 0 0 10px rgba(255,60,100,0.6);
+    animation: blink 0.5s infinite alternate;
+    display: none;
+    z-index: 50;
+  }
+  @keyframes blink { from {opacity:1} to {opacity:0.2} }
+
+  /* Overlay screens */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+    backdrop-filter: blur(4px);
+  }
+
+  .overlay h1 {
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    color: #00ffb4;
+    text-shadow: 0 0 40px rgba(0,255,180,0.8);
+    margin-bottom: 8px;
+  }
+  .overlay .sub {
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 40px;
+  }
+  .overlay .big-score {
+    font-size: 80px;
+    font-weight: 900;
+    color: #ffdd00;
+    text-shadow: 0 0 40px rgba(255,220,0,0.6);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .overlay .score-label {
+    font-size: 10px;
+    letter-spacing: 6px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 40px;
+  }
+
+  .btn {
+    padding: 14px 48px;
+    border: 2px solid #00ffb4;
+    background: transparent;
+    color: #00ffb4;
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .btn:hover {
+    background: #00ffb4;
+    color: #000;
+    box-shadow: 0 0 30px rgba(0,255,180,0.5);
+    cursor: pointer;
+  }
+
+  /* Timer bar */
+  #timer-bar-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    z-index: 50;
+  }
+  #timer-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #00ffb4, #00aaff);
+    box-shadow: 0 0 8px rgba(0,255,180,0.6);
+    transition: width 0.1s linear, background 0.5s;
+    width: 100%;
+  }
+
+  /* Stars */
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--d) infinite alternate;
+    opacity: var(--o);
+  }
+  @keyframes twinkle { to { opacity: 0.1; } }
+</style>
+</head>
+<body>
+
+<div id="game-area">
+  <!-- Stars generated by JS -->
+
+  <div id="hud">
+    <div class="hud-block">
+      <span class="hud-label">Score</span>
+      <span class="hud-value" id="score-display">0</span>
+    </div>
+    <div>
+      <div id="title-text">TARGET RANGE</div>
+    </div>
+    <div class="hud-block" style="align-items:flex-end">
+      <span class="hud-label">Ammo</span>
+      <div id="ammo-display"></div>
+    </div>
+  </div>
+
+  <div id="combo"></div>
+  <div id="reload-msg">— CLICK TO RELOAD —</div>
+  <div id="timer-bar-wrap"><div id="timer-bar"></div></div>
+</div>
+
+<!-- Crosshair -->
+<svg id="crosshair" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="18" cy="18" r="9" stroke="#00ffb4" stroke-width="1.5" opacity="0.9"/>
+  <circle cx="18" cy="18" r="2" fill="#00ffb4"/>
+  <line x1="18" y1="2" x2="18" y2="10" stroke="#00ffb4" stroke-width="1.5"/>
+  <line x1="18" y1="26" x2="18" y2="34" stroke="#00ffb4" stroke-width="1.5"/>
+  <line x1="2" y1="18" x2="10" y2="18" stroke="#00ffb4" stroke-width="1.5"/>
+  <line x1="26" y1="18" x2="34" y2="18" stroke="#00ffb4" stroke-width="1.5"/>
+</svg>
+
+<div id="flash"></div>
+
+<!-- Start overlay -->
+<div class="overlay" id="start-overlay">
+  <h1>TARGET RANGE</h1>
+  <p class="sub">Shoot the targets. Don't miss.</p>
+  <button class="btn" onclick="startGame()">START GAME</button>
+</div>
+
+<!-- End overlay -->
+<div class="overlay" id="end-overlay" style="display:none">
+  <h1>GAME OVER</h1>
+  <div class="big-score" id="final-score">0</div>
+  <div class="score-label">FINAL SCORE</div>
+  <button class="btn" onclick="startGame()">PLAY AGAIN</button>
+</div>
+
+<script>
+const GAME_DURATION = 30;
+const MAX_AMMO = 6;
+const MAX_TARGETS = 5;
+const TARGET_SIZES = [
+  { r: 38, pts: 10, label: 'BULLSEYE' },
+  { r: 28, pts: 20, label: 'SHARP!' },
+  { r: 20, pts: 30, label: 'NICE!' },
+  { r: 14, pts: 50, label: 'WOW!' },
+];
+const TARGET_COLORS = [
+  ['#ff2244','#ff6688','#ffaa00'],
+  ['#ff6600','#ffaa44','#ffdd88'],
+  ['#0088ff','#44bbff','#aaddff'],
+  ['#aa00ff','#cc44ff','#eeccff'],
+  ['#00cc88','#44ffcc','#aaffee'],
+];
+
+let score = 0, ammo = MAX_AMMO, combo = 0, timeLeft = GAME_DURATION;
+let running = false, reloading = false;
+let targets = [];
+let timerInterval, spawnInterval;
+
+const gameArea = document.getElementById('game-area');
+const scoreDisplay = document.getElementById('score-display');
+const ammoDisplay = document.getElementById('ammo-display');
+const comboEl = document.getElementById('combo');
+const reloadMsg = document.getElementById('reload-msg');
+const timerBar = document.getElementById('timer-bar');
+const flashEl = document.getElementById('flash');
+const crosshair = document.getElementById('crosshair');
+const endOverlay = document.getElementById('end-overlay');
+const finalScore = document.getElementById('final-score');
+
+// Stars
+for (let i = 0; i < 80; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const sz = Math.random() * 2 + 0.5;
+  s.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*65}%;left:${Math.random()*100}%;--d:${(Math.random()*2+1).toFixed(1)}s;--o:${(Math.random()*0.6+0.1).toFixed(2)}`;
+  gameArea.appendChild(s);
+}
+
+// Crosshair follow
+document.addEventListener('mousemove', e => {
+  crosshair.style.left = e.clientX + 'px';
+  crosshair.style.top = e.clientY + 'px';
+});
+
+// Ammo UI
+function renderAmmo() {
+  ammoDisplay.innerHTML = '';
+  for (let i = 0; i < MAX_AMMO; i++) {
+    const b = document.createElement('div');
+    b.className = 'bullet' + (i >= ammo ? ' spent' : '');
+    ammoDisplay.appendChild(b);
+  }
+}
+
+// Create target SVG
+function makeTargetSVG(r, colors) {
+  const rings = [r, r*0.7, r*0.45, r*0.22];
+  let svg = `<svg class="target-svg" width="${r*2+4}" height="${r*2+4}" viewBox="0 0 ${r*2+4} ${r*2+4}">`;
+  const cx = r+2, cy = r+2;
+  const ringColors = ['#1a1a2e', colors[0], colors[1], colors[2]];
+  rings.forEach((rr, i) => {
+    svg += `<circle cx="${cx}" cy="${cy}" r="${rr}" fill="${ringColors[i]}" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>`;
+  });
+  svg += `<circle cx="${cx}" cy="${cy}" r="${r*0.08}" fill="white"/>`;
+  svg += '</svg>';
+  return svg;
+}
+
+function spawnTarget() {
+  if (!running) return;
+  if (targets.length >= MAX_TARGETS) return;
+
+  const sizeIdx = Math.floor(Math.random() * TARGET_SIZES.length);
+  const size = TARGET_SIZES[sizeIdx];
+  const colors = TARGET_COLORS[Math.floor(Math.random() * TARGET_COLORS.length)];
+  const r = size.r;
+  const diameter = r * 2 + 4;
+
+  const minX = 40, maxX = window.innerWidth - diameter - 40;
+  const minY = 80, maxY = window.innerHeight * 0.65 - diameter;
+  const x = Math.random() * (maxX - minX) + minX;
+  const y = Math.random() * (maxY - minY) + minY;
+
+  const el = document.createElement('div');
+  el.className = 'target';
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
+  el.style.width = diameter + 'px';
+  el.style.height = diameter + 'px';
+  el.innerHTML = makeTargetSVG(r, colors);
+  el.dataset.pts = size.pts;
+  el.dataset.label = size.label;
+  el.dataset.r = r;
+
+  // Drift animation
+  const driftX = (Math.random() - 0.5) * 120;
+  const driftDur = (Math.random() * 3 + 2).toFixed(1);
+  el.animate([
+    { transform: 'translateX(0px)' },
+    { transform: `translateX(${driftX}px)` },
+    { transform: 'translateX(0px)' }
+  ], { duration: parseFloat(driftDur) * 1000, iterations: Infinity, easing: 'ease-in-out' });
+
+  // Auto-disappear
+  const life = Math.random() * 2500 + 2000;
+  const lifeTimer = setTimeout(() => removeTarget(el, false), life);
+  el.dataset.lifeTimer = lifeTimer;
+
+  gameArea.appendChild(el);
+  targets.push(el);
+
+  // Click handler
+  el.addEventListener('mousedown', e => {
+    e.stopPropagation();
+    if (!running || ammo <= 0) return;
+    hitTarget(el, e);
+  });
+}
+
+function removeTarget(el, hit) {
+  if (!el.parentNode) return;
+  clearTimeout(parseInt(el.dataset.lifeTimer));
+  const idx = targets.indexOf(el);
+  if (idx > -1) targets.splice(idx, 1);
+  if (!hit) {
+    el.remove();
+    if (running) combo = 0;
+  }
+}
+
+function hitTarget(el, e) {
+  if (!running) return;
+  ammo--;
+  renderAmmo();
+  fireFlash();
+
+  const pts = parseInt(el.dataset.pts);
+  const label = el.dataset.label;
+
+  combo++;
+  let multiplier = combo >= 5 ? 3 : combo >= 3 ? 2 : 1;
+  const earned = pts * multiplier;
+  score += earned;
+  scoreDisplay.textContent = score;
+
+  // Score popup
+  showPopup(e.clientX, e.clientY, '+' + earned, multiplier > 1 ? label + ' x' + multiplier : label);
+
+  // Combo display
+  if (combo >= 3) {
+    comboEl.textContent = combo + '× COMBO';
+    comboEl.style.opacity = '1';
+    setTimeout(() => comboEl.style.opacity = '0', 1000);
+  }
+
+  el.classList.add('hit');
+  removeTarget(el, true);
+  setTimeout(() => { if (el.parentNode) el.remove(); }, 400);
+
+  checkAmmo();
+}
+
+function showPopup(x, y, pts, label) {
+  const rect = gameArea.getBoundingClientRect();
+  const px = x - rect.left;
+  const py = y - rect.top;
+
+  const p1 = document.createElement('div');
+  p1.className = 'score-popup';
+  p1.textContent = pts;
+  p1.style.left = (px - 20) + 'px';
+  p1.style.top = (py - 10) + 'px';
+  gameArea.appendChild(p1);
+  p1.addEventListener('animationend', () => p1.remove());
+
+  const p2 = document.createElement('div');
+  p2.className = 'miss-popup';
+  p2.style.color = '#ffdd00';
+  p2.textContent = label;
+  p2.style.left = (px - 30) + 'px';
+  p2.style.top = (py - 36) + 'px';
+  p2.style.fontSize = '10px';
+  gameArea.appendChild(p2);
+  p2.addEventListener('animationend', () => p2.remove());
+}
+
+function fireFlash() {
+  flashEl.style.opacity = '0.12';
+  setTimeout(() => flashEl.style.opacity = '0', 60);
+}
+
+function checkAmmo() {
+  if (ammo <= 0 && running) {
+    reloading = true;
+    reloadMsg.style.display = 'block';
+  }
+}
+
+// Click on background = miss shot (if ammo)
+gameArea.addEventListener('mousedown', e => {
+  if (!running) return;
+  if (reloading) {
+    reload();
+    return;
+  }
+  if (ammo <= 0) { reload(); return; }
+
+  // Miss
+  ammo--;
+  renderAmmo();
+  fireFlash();
+  combo = 0;
+
+  // Miss text
+  const rect = gameArea.getBoundingClientRect();
+  const p = document.createElement('div');
+  p.className = 'miss-popup';
+  p.textContent = 'MISS';
+  p.style.left = (e.clientX - rect.left - 20) + 'px';
+  p.style.top = (e.clientY - rect.top - 20) + 'px';
+  gameArea.appendChild(p);
+  p.addEventListener('animationend', () => p.remove());
+
+  checkAmmo();
+});
+
+function reload() {
+  if (!running) return;
+  ammo = MAX_AMMO;
+  reloading = false;
+  reloadMsg.style.display = 'none';
+  renderAmmo();
+}
+
+function startGame() {
+  // Clear state
+  document.getElementById('start-overlay').style.display = 'none';
+  endOverlay.style.display = 'none';
+  targets.forEach(t => { if(t.parentNode) t.remove(); });
+  targets = [];
+  document.querySelectorAll('.target').forEach(t => t.remove());
+
+  score = 0; ammo = MAX_AMMO; combo = 0; timeLeft = GAME_DURATION;
+  reloading = false;
+  reloadMsg.style.display = 'none';
+  scoreDisplay.textContent = '0';
+  timerBar.style.width = '100%';
+  timerBar.style.background = 'linear-gradient(90deg, #00ffb4, #00aaff)';
+  renderAmmo();
+  running = true;
+
+  clearInterval(timerInterval);
+  clearInterval(spawnInterval);
+
+  // Timer
+  timerInterval = setInterval(() => {
+    timeLeft -= 0.1;
+    const pct = (timeLeft / GAME_DURATION) * 100;
+    timerBar.style.width = pct + '%';
+    if (pct < 30) timerBar.style.background = 'linear-gradient(90deg, #ff4466, #ff8800)';
+    else if (pct < 60) timerBar.style.background = 'linear-gradient(90deg, #ffdd00, #ff8800)';
+    if (timeLeft <= 0) endGame();
+  }, 100);
+
+  // Spawn
+  spawnInterval = setInterval(() => {
+    if (running) spawnTarget();
+  }, 900);
+
+  // Initial targets
+  for (let i = 0; i < 3; i++) setTimeout(spawnTarget, i * 250);
+}
+
+function endGame() {
+  running = false;
+  clearInterval(timerInterval);
+  clearInterval(spawnInterval);
+  targets.forEach(t => { if(t.parentNode) t.remove(); });
+  targets = [];
+  finalScore.textContent = score;
+  endOverlay.style.display = 'flex';
+}
+</script>
+</body>
+</html>

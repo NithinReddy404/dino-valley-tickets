@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Madhu Krishna Teja Janaswamy – Aeronautics & Aerospace Engineer portfolio. Expert in aircraft design, CFD, and structural analysis." />
+  <meta name="keywords" content="aeronautics, aerospace engineer, CFD, aircraft design, Madhu Krishna Teja Janaswamy" />
+  <meta property="og:title" content="Madhu Krishna Teja Janaswamy | Aerospace Engineer" />
+  <meta property="og:description" content="Sky-high ambitions, ground-level precision. Aerospace portfolio of Madhu Krishna Teja Janaswamy." />
+  <meta property="og:type" content="website" />
+  <title>Madhu Krishna Teja Janaswamy | Aerospace Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- THREE.JS CANVAS BACKGROUND -->
+  <canvas id="sky-canvas" aria-hidden="true"></canvas>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-brand">MKT<span class="accent">J</span></div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links" role="list">
+      <li><a href="#profile" class="nav-link" aria-label="Go to Profile section">Profile</a></li>
+      <li><a href="#experience" class="nav-link" aria-label="Go to Experience section">Experience</a></li>
+      <li><a href="#education" class="nav-link" aria-label="Go to Education section">Education</a></li>
+      <li><a href="#skills" class="nav-link" aria-label="Go to Skills section">Skills</a></li>
+      <li><a href="#projects" class="nav-link" aria-label="Go to Projects section">Projects</a></li>
+      <li><a href="#publications" class="nav-link" aria-label="Go to Publications section">Publications</a></li>
+      <li><a href="#contact" class="nav-link" aria-label="Go to Contact section">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" class="hero" aria-label="Hero section">
+    <div class="hero-content">
+      <div class="hero-badge">✈ Aerospace Engineer</div>
+      <h1 class="hero-name">
+        <span class="name-line" data-delay="0">MADHU KRISHNA</span>
+        <span class="name-line" data-delay="120">TEJA</span>
+        <span class="name-line accent-text" data-delay="240">JANASWAMY</span>
+      </h1>
+      <p class="hero-tagline">Sky-high ambitions. Ground-level precision.</p>
+      <div class="hero-cta-group">
+        <a href="#profile" class="btn-cta" role="button">
+          <span class="btn-icon">🎫</span>
+          Buy Ticket For This Experience
+        </a>
+        <a href="#contact" class="btn-outline" role="button">Get In Touch</a>
+      </div>
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span>SCROLL TO BOARD</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </div>
+    <div class="hero-altitude" aria-hidden="true">
+      <div class="alt-value">FL390</div>
+      <div class="alt-label">CRUISING ALTITUDE</div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content">
+
+    <!-- PROFILE -->
+    <section id="profile" class="section" aria-labelledby="profile-heading">
+      <div class="section-inner">
+        <div class="section-label">01 / PROFILE</div>
+        <h2 class="section-title" id="profile-heading">About The Pilot</h2>
+        <div class="glass-panel profile-panel">
+          <div class="profile-avatar" aria-hidden="true">
+            <div class="avatar-ring"></div>
+            <div class="avatar-initials">MKT</div>
+          </div>
+          <div class="profile-text">
+            <p class="profile-intro">
+              A passionate <strong>Aeronautics & Aerospace Engineering graduate</strong> with deep expertise spanning
+              computational fluid dynamics, aircraft structural analysis, propulsion systems, and aircraft maintenance operations.
+              Driven by a lifelong fascination with flight, combining rigorous academic foundations with hands-on engineering
+              and maintenance experience.
+            </p>
+            <div class="profile-meta-row">
+              <div class="meta-item">
+                <span class="meta-label">Location</span>
+                <span class="meta-value">India</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Languages</span>
+                <span class="meta-value">Telugu · English · Hindi</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Field</span>
+                <span class="meta-value">Aeronautics & Aerospace</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="section section-alt" aria-labelledby="experience-heading">
+      <div class="section-inner">
+        <div class="section-label">02 / EXPERIENCE</div>
+        <h2 class="section-title" id="experience-heading">Flight Log</h2>
+        <div class="timeline">
+
+          <div class="timeline-item glass-panel">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3 class="job-title">Aircraft Maintenance Trainee</h3>
+                <span class="job-company">Air India MRO (Maintenance, Repair & Overhaul)</span>
+              </div>
+              <ul class="job-bullets" role="list">
+                <li>Trained in scheduled and unscheduled maintenance procedures for commercial aircraft in compliance with DGCA and EASA standards.</li>
+                <li>Assisted senior AMEs in conducting line maintenance checks (A-Check, B-Check) on narrow-body and wide-body aircraft.</li>
+                <li>Gained hands-on experience with airframe inspections, hydraulic systems, and avionics troubleshooting.</li>
+                <li>Documented maintenance activities using AMOS (Aircraft Maintenance and Operations Software).</li>
+                <li>Participated in safety briefings and adhered to FOD (Foreign Object Debris) prevention protocols.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item glass-panel">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3 class="job-title">Engineering Intern – Aerodynamics & Structures</h3>
+                <span class="job-company">Hindustan Aeronautics Limited (HAL)</span>
+              </div>
+              <ul class="job-bullets" role="list">
+                <li>Supported the aerodynamics team in conducting wind tunnel test preparations and data acquisition.</li>
+                <li>Assisted in structural analysis of aircraft components using ANSYS Mechanical and NASTRAN.</li>
+                <li>Worked on fatigue life estimation of aircraft wing spars under cyclic loading conditions.</li>
+                <li>Collaborated on documentation for design reviews and contributed to technical reports.</li>
+                <li>Participated in CAD modeling of sub-assemblies using CATIA V5.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="section" aria-labelledby="education-heading">
+      <div class="section-inner">
+        <div class="section-label">03 / EDUCATION</div>
+        <h2 class="section-title" id="education-heading">Academic Altitude</h2>
+        <div class="edu-grid">
+
+          <div class="edu-card glass-panel">
+            <div class="edu-icon" aria-hidden="true">🎓</div>
+            <div class="edu-degree">B.Tech – Aeronautical Engineering</div>
+            <div class="edu-school">Institute of Aeronautical Engineering (IARE), Hyderabad</div>
+            <div class="edu-meta">Jawaharlal Nehru Technological University (JNTUH)</div>
+          </div>
+
+          <div class="edu-card glass-panel">
+            <div class="edu-icon" aria-hidden="true">📐</div>
+            <div class="edu-degree">Intermediate (MPC)</div>
+            <div class="edu-school">Sri Chaitanya Junior College</div>
+            <div class="edu-meta">Board of Intermediate Education, Andhra Pradesh</div>
+          </div>
+
+          <div class="edu-card glass-panel">
+            <div class="edu-icon" aria-hidden="true">🏫</div>
+            <div class="edu-degree">Secondary School (SSC)</div>
+            <div class="edu-school">Bhashyam Public School</div>
+            <div class="edu-meta">Board of Secondary Education, Andhra Pradesh</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section section-alt" aria-labelledby="skills-heading">
+      <div class="section-inner">
+        <div class="section-label">04 / SKILLS</div>
+        <h2 class="section-title" id="skills-heading">Instrument Panel</h2>
+        <div class="skills-grid">
+
+          <div class="skill-cluster glass-panel">
+            <h3 class="cluster-title">✈ Aeronautical Engineering</h3>
+            <div class="skill-tags">
+              <span class="tag">Aerodynamics</span>
+              <span class="tag">Aircraft Structures</span>
+              <span class="tag">Propulsion Systems</span>
+              <span class="tag">Flight Mechanics</span>
+              <span class="tag">Aeroelasticity</span>
+              <span class="tag">Aircraft Design</span>
+              <span class="tag">Wind Tunnel Testing</span>
+            </div>
+          </div>
+
+          <div class="skill-cluster glass-panel">
+            <h3 class="cluster-title">💻 Software & Tools</h3>
+            <div class="skill-tags">
+              <span class="tag">ANSYS Fluent</span>
+              <span class="tag">ANSYS Mechanical</span>
+              <span class="tag">CATIA V5</span>
+              <span class="tag">SolidWorks</span>
+              <span class="tag">MATLAB</span>
+              <span class="tag">NASTRAN</span>
+              <span class="tag">AutoCAD</span>
+              <span class="tag">XFOIL</span>
+              <span class="tag">OpenFOAM</span>
+            </div>
+          </div>
+
+          <div class="skill-cluster glass-panel">
+            <h3 class="cluster-title">🔬 Analysis & Methods</h3>
+            <div class="skill-tags">
+              <span class="tag">CFD Analysis</span>
+              <span class="tag">FEA (Finite Element Analysis)</span>
+              <span class="tag">Structural Analysis</span>
+              <span class="tag">Fatigue Analysis</span>
+              <span class="tag">Thermal Analysis</span>
+              <span class="tag">Modal Analysis</span>
+            </div>
+          </div>
+
+          <div class="skill-cluster glass-panel">
+            <h3 class="cluster-title">🛠 Maintenance & Operations</h3>
+            <div class="skill-tags">
+              <span class="tag">Aircraft Maintenance</span>
+              <span class="tag">MRO Operations</span>
+              <span class="tag">DGCA Regulations</span>
+              <span class="tag">EASA Standards</span>
+              <span class="tag">AMOS Software</span>
+              <span class="tag">FOD Prevention</span>
+              <span class="tag">Line Maintenance</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section" aria-labelledby="projects-heading">
+      <div class="section-inner">
+        <div class="section-label">05 / PROJECTS</div>
+        <h2 class="section-title" id="projects-heading">Mission Files</h2>
+        <div class="projects-grid">
+
+          <article class="project-card glass-panel" aria-label="Project: CFD Analysis of NACA Airfoil">
+            <div class="project-number" aria-hidden="true">01</div>
+            <h3 class="project-title">CFD Analysis of NACA Airfoil</h3>
+            <p class="project-desc">
+              Performed 2D and 3D CFD analysis of NACA 2412 and NACA 4412 airfoil profiles using ANSYS Fluent.
+              Studied lift, drag, and pressure coefficient distributions at various angles of attack.
+              Validated numerical results against experimental wind tunnel data.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">ANSYS Fluent</span>
+              <span class="tech-tag">CFD</span>
+              <span class="tech-tag">NACA Airfoil</span>
+            </div>
+          </article>
+
+          <article class="project-card glass-panel" aria-label="Project: Structural Analysis of Aircraft Wing">
+            <div class="project-number" aria-hidden="true">02</div>
+            <h3 class="project-title">Structural Analysis of Aircraft Wing</h3>
+            <p class="project-desc">
+              Conducted finite element analysis of a commercial aircraft wing under static and dynamic loading
+              conditions using ANSYS Mechanical. Investigated stress distribution, deformation, and safety
+              factors across multiple flight load cases.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">ANSYS Mechanical</span>
+              <span class="tech-tag">FEA</span>
+              <span class="tech-tag">Structural Analysis</span>
+            </div>
+          </article>
+
+          <article class="project-card glass-panel" aria-label="Project: Design and Analysis of Winglet">
+            <div class="project-number" aria-hidden="true">03</div>
+            <h3 class="project-title">Design and Analysis of Winglet</h3>
+            <p class="project-desc">
+              Designed blended winglet geometries in CATIA V5 and analyzed their effect on induced drag reduction
+              and aerodynamic efficiency. Compared multiple winglet configurations using CFD and validated
+              performance improvements.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">CATIA V5</span>
+              <span class="tech-tag">CFD</span>
+              <span class="tech-tag">Winglet Design</span>
+            </div>
+          </article>
+
+          <article class="project-card glass-panel" aria-label="Project: Propulsion System Analysis">
+            <div class="project-number" aria-hidden="true">04</div>
+            <h3 class="project-title">Propulsion System Performance Analysis</h3>
+            <p class="project-desc">
+              Analyzed the thermodynamic performance of a turbofan engine cycle using MATLAB. Calculated specific
+              thrust, TSFC, and overall efficiency across varying bypass ratios and flight conditions. Compared
+              results with published engine performance data.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">MATLAB</span>
+              <span class="tech-tag">Turbofan</span>
+              <span class="tech-tag">Propulsion</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SEMINARS & WORKSHOPS -->
+    <section id="seminars" class="section section-alt" aria-labelledby="seminars-heading">
+      <div class="section-inner">
+        <div class="section-label">05B / SEMINARS</div>
+        <h2 class="section-title" id="seminars-heading">Briefing Room</h2>
+        <div class="seminar-list">
+          <div class="seminar-item glass-panel">
+            <span class="seminar-icon" aria-hidden="true">📡</span>
+            <div class="seminar-text">
+              <strong>National Conference on Aerospace Technologies</strong> – Presented research on CFD-based airfoil optimization at IARE, Hyderabad.
+            </div>
+          </div>
+          <div class="seminar-item glass-panel">
+            <span class="seminar-icon" aria-hidden="true">🛸</span>
+            <div class="seminar-text">
+              <strong>Workshop on UAV Design and Applications</strong> – Participated in hands-on workshop covering UAV airframe design, control systems, and mission planning.
+            </div>
+          </div>
+          <div class="seminar-item glass-panel">
+            <span class="seminar-icon" aria-hidden="true">🏭</span>
+            <div class="seminar-text">
+              <strong>Seminar on Advanced Materials in Aerospace</strong> – Attended seminar on composite materials, titanium alloys, and additive manufacturing for aerospace applications.
+            </div>
+          </div>
+          <div class="seminar-item glass-panel">
+            <span class="seminar-icon" aria-hidden="true">🔧</span>
+            <div class="seminar-text">
+              <strong>Hands-on Training: Aircraft Systems</strong> – Completed training session on hydraulic, pneumatic, and fuel systems aboard commercial aircraft.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section id="publications" class="section" aria-labelledby="publications-heading">
+      <div class="section-inner">
+        <div class="section-label">06 / PUBLICATIONS</div>
+        <h2 class="section-title" id="publications-heading">Published Research</h2>
+        <div class="pub-card glass-panel">
+          <div class="pub-icon" aria-hidden="true">📄</div>
+          <div class="pub-content">
+            <h3 class="pub-title">
+              Aerodynamic Performance Analysis and Optimization of NACA Airfoils Using Computational Fluid Dynamics
+            </h3>
+            <p class="pub-meta">
+              Published in an international peer-reviewed journal. The study presents a systematic CFD-based
+              investigation of multiple NACA airfoil series, exploring lift-to-drag ratios, stall characteristics,
+              and performance envelopes under varying Reynolds numbers and angles of attack.
+            </p>
+            <a
+              href="https://www.ijert.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="pub-link"
+              aria-label="View publication (opens in new tab)"
+            >
+              View Publication ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section section-alt" aria-labelledby="contact-heading">
+      <div class="section-inner">
+        <div class="section-label">07 / CONTACT</div>
+        <h2 class="section-title" id="contact-heading">Tower, Request Landing</h2>
+        <div class="contact-grid">
+          <div class="contact-card glass-panel">
+            <span class="contact-icon" aria-hidden="true">✉️</span>
+            <div class="contact-label">Email</div>
+            <a href="/cdn-cgi/l/email-protection#254844414d504e574c564d4b4451404f440b4f654248444c490b464a48" class="contact-value"><span class="__cf_email__" data-cfemail="315c505559445a435842595f5045545b501f5b71565c50585d1f525e5c">[email&#160;protected]</span></a>
+          </div>
+          <div class="contact-card glass-panel">
+            <span class="contact-icon" aria-hidden="true">💼</span>
+            <div class="contact-label">LinkedIn</div>
+            <a href="https://linkedin.com/in/madhu-krishna-teja-janaswamy" target="_blank" rel="noopener noreferrer" class="contact-value">linkedin.com/in/madhu-krishna-teja-janaswamy</a>
+          </div>
+          <div class="contact-card glass-panel">
+            <span class="contact-icon" aria-hidden="true">📍</span>
+            <div class="contact-label">Location</div>
+            <span class="contact-value">Hyderabad, Telangana, India</span>
+          </div>
+        </div>
+        <div class="contact-message glass-panel">
+          <p>Currently open to <strong>full-time aerospace engineering roles</strong>, MRO opportunities, and research collaborations. Cleared for takeoff — let's connect.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">MADHU KRISHNA TEJA JANASWAMY</div>
+      <div class="footer-copy">© 2025 · Built with Three.js · Cleared for takeoff</div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.c
