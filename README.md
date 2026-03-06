@@ -1,4 +1,6 @@
-# Dino Valley Tickets
+# Dino Valley Tickets 
+"Dino Valley Tickets next version is coming soon had to post the failures as well"
+
 
 A responsive website for booking dinosaur park tickets with a cinematic 3D-inspired dinosaur theme.
 
